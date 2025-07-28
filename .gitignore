@@ -2,6 +2,7 @@ pytest.ini
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
+# tests/unit/__pycache__/
 *.py[codz]
 *$py.class
 
