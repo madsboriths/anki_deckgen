@@ -16,11 +16,9 @@ app = typer.Typer()
 @app.command()
 def generate(topic: str, num_of_cards: int):
     new_deck = dg.make_cards(topic, num_of_cards)
-    print(new_deck)
-    print(f"Generated {num_of_cards} cards about {topic}")
 
 @app.command()
-def null():
+def null(): 
     pass
 
 if __name__ == "__main__":
