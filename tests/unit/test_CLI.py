@@ -1,10 +1,9 @@
-import pytest
+from anki_scraper.cli import app
 from typer.testing import CliRunner
-from anki_scraper.cli import app 
 
 runner = CliRunner()
 
-def test_hello_without_args():
-    result = runner.invoke(app, ["hello"])
+def test_generate_creates_apkg(tmp_path, monkeypatch):
+    result = runner.invoke(app, ["generate", "types", "--output", str(tmp_path/"d.apkg")])
     assert result.exit_code == 0
-    assert result.stdout.strip() == "Hello world!"
+    assert (tmp_path/"d.apkg").exists()

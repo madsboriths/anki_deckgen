@@ -1,5 +1,7 @@
 pytest.ini
 
+poetry.lock
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 # tests/unit/__pycache__/

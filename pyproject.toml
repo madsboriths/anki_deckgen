@@ -1,0 +1,7 @@
+[tool.poetry]
+name = "anki-scraper"
+version = "0.1.0"
+description = "Generate Anki decks from topics via GPT"
+
+[tool.poetry.scripts]
+anki-scraper = "anki_scraper.cli:app"
