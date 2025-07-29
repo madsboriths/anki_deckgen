@@ -1,7 +1,13 @@
-[tool.poetry]
-name = "anki-scraper"
-version = "0.1.0"
-description = "Generate Anki decks from topics via GPT"
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
-[tool.poetry.scripts]
+[project]
+name = "anki-scraper"
+version = "1.0.0"
+
+[project.scripts]
 anki-scraper = "anki_scraper.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]
