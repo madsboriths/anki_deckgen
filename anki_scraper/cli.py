@@ -20,17 +20,15 @@ from appdirs import user_config_dir
 
 app = typer.Typer()
     
-# default_option = IO.load_output_dir()
-
 @app.command()
 def generate(topic: str, num_of_cards: int, 
              new_dir: Path = typer.Option(None, "--output", "-o",
                                         help="Where to write the .apkg. If unset, uses your config or CWD.")):
     if new_dir is not None:
         io.save_output_dir(new_dir)
-
     new_deck = dg.make_cards(topic, num_of_cards)
-    print(f"Generated {num_of_cards} cards about {topic}")
+    io.write_deck(new_deck)
+    typer.echo(f"Generated {num_of_cards} cards about {topic}")
 
 @app.command("set-output")
 def set_output(new_dir: Path = typer.Argument(

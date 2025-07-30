@@ -1,6 +1,8 @@
 from pathlib import Path
 import toml
 
+import genanki as gk
+
 from appdirs import user_config_dir
 
 CONFIG_DIR  = Path(user_config_dir("anki-scraper"))
@@ -16,3 +18,7 @@ def load_output_dir():
         return Path.cwd()
     cfg = toml.loads(CONFIG_FILE.read_text())
     return Path(cfg.get("output_dir", "."))
+
+def write_deck(new_deck):
+    load_output_dir().mkdir(parents=True, exist_ok=True)
+    gk.Package(new_deck).write_to_file(load_output_dir() / f"{new_deck.name}.apkg")

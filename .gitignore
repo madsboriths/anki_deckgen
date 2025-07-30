@@ -2,6 +2,8 @@ pytest.ini
 
 poetry.lock
 
+generated_decks/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 # tests/unit/__pycache__/
