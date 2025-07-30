@@ -11,3 +11,6 @@ anki-scraper = "anki_scraper.cli:app"
 
 [tool.setuptools.packages.find]
 where = ["."]
+
+[tool.anki-scraper]
+output_dir="./generated_decks"

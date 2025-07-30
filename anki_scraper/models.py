@@ -4,3 +4,7 @@ from dataclasses import dataclass
 class Card:
     front: str
     back: str
+
+@dataclass
+class Deck:
+    cards: list[Card]
