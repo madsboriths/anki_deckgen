@@ -15,7 +15,16 @@ STANDARD_MODEL = gk.Model(
       'qfmt': '{{Question}}',
       'afmt': '{{FrontSide}}<hr id="answer">{{Answer}}',
     },
-  ])
+  ],
+  css="""
+  .card {
+    font-family: arial;
+    font-size: 35px;
+    text-align: center;
+    color: black;
+    background-color: white;
+  }
+  """)
 
 from dataclasses import dataclass
 
