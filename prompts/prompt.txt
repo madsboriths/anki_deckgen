@@ -1,0 +1,26 @@
+You are generating study flashcards.
+
+Task
+- Create {num_cards} flashcards about the topic: {topic}.
+- Audience: Assume CS graduate with MSc degree in Computer Science and Engineering.
+- Goal: concise questions that test understanding; answers that are correct, unambiguous, and self-contained. 
+
+Source context
+- Topic description (more information on the given topic, information on what to cover, etc.): {topic_description}
+
+Card format
+- Each card has:
+  - front: the QUESTION only.
+  - back: the ANSWER only (do not repeat the question).
+- Keep questions answerable without hidden context.
+- Prefer precise wording over verbosity.
+
+Output format (REQUIRED)
+- Return ONLY a single fenced code block with language tag `jsonl`.
+- Inside the block, write one JSON object per line with keys "front" and "back".
+- No markdown outside the code block. No extra commentary.
+
+Example (format only; content is illustrative):
+```jsonl
+{{"front": "What is overfitting?", "back": "When a model fits noise/idiosyncrasies of the training data, harming generalization."}}
+{{"front": "Define bias-variance trade-off.", "back": "The balance between error from erroneous assumptions (bias) and error from sensitivity to data fluctuations (variance)."}}
