@@ -56,7 +56,7 @@ def create_flashcard(question: str, answer: str) -> gk.Note:
     )
 
 def create_flashcard_deck(flashcards: List[Tuple[str, str]], topic: str) -> gk.Deck:
-    new_deck = gk.Deck(deck_id, "Generated Deck")
+    new_deck = gk.Deck(deck_id, topic)
     for question, answer in flashcards:
         flashcard = create_flashcard(question, answer)
         new_deck.add_note(flashcard)
