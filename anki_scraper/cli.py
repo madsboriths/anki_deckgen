@@ -40,9 +40,9 @@ def generate(
         topic_description=(description or ""),
         num_cards=num_of_cards
     )
-    raw_response = dg.prompt_openai(prompt_text)
+    raw_response = dg.prompt_gpt_to_create_flashcards(prompt_text)
 
-    cards = dg.parse_response(raw_response)
+    cards = dg.extract_flashcard_pairs(raw_response)
     deck = dg.create_flashcard_deck(cards, topic=topic)
     
     gk.Package(deck).write_to_file(Path("generated_decks") / f"{topic}.apkg")

@@ -13,7 +13,7 @@ import os
 API_KEY = os.environ["OPENAI_API_KEY"]
 client = OpenAI(api_key=API_KEY)
 
-def prompt_openai(prompt: str) -> str:
+def prompt_gpt_to_create_flashcards(prompt: str) -> str:
     try:
         response = client.responses.create(
             model="gpt-5-nano",
@@ -23,7 +23,7 @@ def prompt_openai(prompt: str) -> str:
         raise RuntimeError(f"Failed to prompt: {e}") from e
     return response.output_text.strip()
 
-def parse_response(response: str) -> List[Tuple[str, str]]:
+def extract_flashcard_pairs(response: str) -> List[Tuple[str, str]]:
     m = re.search(r"```jsonl\s*(.+?)\s*```", response, flags=re.DOTALL | re.IGNORECASE)
     if not m:
         m = re.search(r"```\w*\s*(.+?)\s*```", response, flags=re.DOTALL)
@@ -80,11 +80,11 @@ if __name__ == "__main__":
         topic_description=(description or ""),
         num_cards=5
     )
-    raw_response = prompt_openai(prompt_text)
+    raw_response = prompt_gpt_to_create_flashcards(prompt_text)
 
     # with open("raw_response.txt", "r", encoding="utf-8") as f:
     #     raw_response = f.read().strip()
-    cards = parse_response(raw_response)
+    cards = extract_flashcard_pairs(raw_response)
     deck = create_flashcard_deck(cards, topic=topic)
     
     gk.Package(deck).write_to_file(Path("generated_decks") / f"{topic}.apkg")
