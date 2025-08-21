@@ -1,7 +1,0 @@
-```jsonl
-{"front": "Where are ball pythons native?", "back": "Sub-Saharan Africa."}
-{"front": "Are ball pythons venomous?", "back": "No; they are non-venomous constrictor snakes."}
-{"front": "Why is the ball python named as such?", "back": "They ball up into a tight coil when threatened."}
-{"front": "What is the typical adult length of a ball python?", "back": "About 3 to 5 feet."}
-{"front": "What factors contribute to ball pythons' popularity as pets?", "back": "Docile nature, manageable size, and relatively easy care requirements."}
-```
