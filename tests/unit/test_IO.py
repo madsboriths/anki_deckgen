@@ -1,10 +1,6 @@
 from anki_scraper.cli import app
-from anki_scraper.models import Card
-import anki_scraper.cli as cli
 import anki_scraper.fileio as io
-
 from typer.testing import CliRunner
-
 from pathlib import Path
 import toml
 
@@ -29,6 +25,3 @@ def test_set_output_path_successfully(fake_config, monkeypatch):
 
     cfg = toml.loads(io.CONFIG_FILE.read_text())
     assert Path(cfg["output_dir"]) == Path(str(test_path))
-
-def test_write_deck_successfully():
-    pytest.fail("TODO")

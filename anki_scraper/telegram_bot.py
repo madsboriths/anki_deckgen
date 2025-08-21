@@ -1,14 +1,17 @@
 import os, logging
 from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
-from anki_scraper.deck_generation import prompt_gpt_to_create_flashcards, extract_flashcard_pairs, create_flashcard_deck
+from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
+from anki_scraper.anki_flashcards import parse_flashcards_from_jsonl, add_cards_to_respective_decks
+from anki_connect import invoke
 from pathlib import Path
 from openai import OpenAI
+from openai_client import prompt_gpt
 import json
 import genanki as gk
+from typing import List, Tuple
 
-TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 API_KEY = os.environ["OPENAI_API_KEY"]
+TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -17,66 +20,42 @@ logging.basicConfig(
 
 client = OpenAI(api_key=API_KEY)
 
-def prompt_gpt_to_prepare_arguments(user_message: str) -> str:
-    
+async def generate_flashcards_by_user_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompt_path = Path("prompts/telegram_prompt.txt")
     system_prompt = prompt_path.read_text(encoding="utf-8").strip()
-
-    response = client.responses.create(
-        model="gpt-5-nano",
-        input=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_message},
-        ]
-    )
-
-    parsed_response = json.loads(response.output_text.strip())
-
-    topic = parsed_response.get("topic", "").strip()
-    topic_description = parsed_response.get("topic_description", "").strip()
-    num_cards = parsed_response.get("num_cards", 3)
-
-    result = {
-        "topic": topic,
-        "topic_description": topic_description,
-        "num_cards": num_cards,
-    }
-
-    return json.dumps(result, ensure_ascii=False)
-
-async def create_cards(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    parsed_args = prompt_gpt_to_prepare_arguments(update.message.text)
     
-    topic = json.loads(parsed_args).get("topic", "").strip()
-    description = json.loads(parsed_args).get("topic_description", "").strip()
-    num_cards = json.loads(parsed_args).get("num_cards", 3)
+    parsed_args = json.loads(prompt_gpt(system_prompt=system_prompt, user_prompt=update.message.text))
 
-    print(f"Creating deck for topic: {topic}, description: {description}, num_cards: {num_cards}")
+    print(f"Parsed arguments: {parsed_args}")
 
-    template_path = Path("prompts/prompt.txt")
-    template = template_path.read_text(encoding="utf-8").strip()
-    prompt_text = template.format(
-        topic=topic,
-        topic_description=(description or ""),
-        num_cards=num_cards
-    )
+    topic = parsed_args.get("topic").strip()
+    description = parsed_args.get("topic_description").strip()
+    num_cards = parsed_args.get("num_cards", 1)
 
-    response = prompt_gpt_to_create_flashcards(prompt_text)
-    flashcards = extract_flashcard_pairs(response)
+    gk_decks = [deck_name for deck_name in invoke("deckNames") if "GK" in deck_name]
+    
+    prompt_path = Path("prompts/prompt.txt")
+    system_prompt = prompt_path.read_text(encoding="utf-8").strip()
+    user_prompt = f"""
+        topic: {topic},
+        description: {description or ""},
+        number of cards: {num_cards},
+        Available decks: {', '.join(gk_decks)}
+    """
 
-    deck = create_flashcard_deck(flashcards, topic=topic)
-    gk.Package(deck).write_to_file(Path("generated_decks") / f"{topic}.apkg")
-
+    response_string = prompt_gpt(system_prompt=system_prompt, user_prompt=user_prompt)
+    flashcards = parse_flashcards_from_jsonl(response_string) 
+    response = add_cards_to_respective_decks(flashcards)
+    
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text=f"""
-            Deck for topic '{topic}' with {num_cards} cards has been created successfully!"""
+        text=response
     )
 
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
     
-    anki_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), create_cards)
+    anki_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), generate_flashcards_by_user_prompt)
     application.add_handler(anki_handler)
 
     application.run_polling()

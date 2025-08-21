@@ -25,3 +25,19 @@ STANDARD_MODEL = gk.Model(
     background-color: white;
   }
   """)
+
+class Flashcard:
+    def __init__(self, deck_name: str, front: str, back: str):
+        self.deck_name = deck_name
+        self.front = front
+        self.back = back
+
+    def __repr__(self):
+        return f"Flashcard(deck_name={self.deck_name!r}, question={self.front!r}, answer={self.back!r})"
+
+    def to_dict(self):
+        return {
+            "deck_name": self.deck_name,
+            "question": self.front,
+            "answer": self.back
+        }

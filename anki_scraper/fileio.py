@@ -1,8 +1,6 @@
 from pathlib import Path
 import toml
-
 import genanki as gk
-
 from appdirs import user_config_dir
 
 CONFIG_DIR  = Path(user_config_dir("anki-scraper"))
