@@ -2,10 +2,10 @@ import os, logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
 from anki_scraper.anki_flashcards import parse_flashcards_from_jsonl, add_cards_to_respective_decks
-from anki_connect import invoke
+from .anki_connect import invoke
 from pathlib import Path
 from openai import OpenAI
-from openai_client import prompt_gpt
+from .openai_client import prompt_gpt
 import json
 import genanki as gk
 from typing import List, Tuple

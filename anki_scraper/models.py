@@ -1,5 +1,4 @@
 import genanki as gk
-
 import random
 
 STANDARD_MODEL = gk.Model(

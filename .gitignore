@@ -1,3 +1,5 @@
+logs
+
 pytest.ini
 
 poetry.lock

@@ -1,11 +1,8 @@
 import typer
-
 from pathlib import Path
 from appdirs import user_config_dir
-
 import anki_scraper.anki_flashcards as dg
 import anki_scraper.fileio as io
-
 import genanki as gk
 
 app = typer.Typer()
