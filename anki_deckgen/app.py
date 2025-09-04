@@ -1,5 +1,4 @@
 import os, sys
-
 from openai import OpenAI
 from .adapters.telegram_adapter import TelegramAdapter
 from .adapters.cli_adapter import typer_cli_app

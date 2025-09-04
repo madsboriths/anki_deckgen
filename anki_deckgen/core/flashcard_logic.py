@@ -36,21 +36,3 @@ def parse_flashcards_from_jsonl(jsonl: str) -> List[Flashcard]:
         )
     return cards
 
-#  def add_cards_to_respective_decks(flashcards: List[Flashcard]) -> None:
-#         genanki_specific_decks = [deck_name for deck_name in execute_anki_action("deckNames") if "GK" in deck_name]
-#         for flashcard in flashcards:
-#             note = {
-#                 "deckName": flashcard.deck_name,
-#                 "modelName": "Basic",
-#                 "fields": {
-#                     "Front": flashcard.front,
-#                     "Back": flashcard.back
-#                 }
-#             }
-#             if flashcard.deck_name in genanki_specific_decks:
-#                 execute_anki_action("addNote", note=note)
-#             else:
-#                 execute_anki_action("createDeck", deck=flashcard.deck_name)
-#                 execute_anki_action("addNote", note=note)
-#         execute_anki_action("sync")
-#         return f"Added {len(flashcards)} cards to respective decks."
