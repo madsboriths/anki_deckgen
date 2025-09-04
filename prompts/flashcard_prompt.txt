@@ -22,9 +22,9 @@ Global card rules (both modes)
 Deck selection (applies in both modes)
 1) If possible, you must select a deck that exactly matches one of the provided `available_decks`. Otherwise see point 5.
 2) Deck MUST start with "GK" and include ≥1 subdirectory (e.g., "GK::<subdir>" or deeper). Never use plain "GK".
-3) If `optional_deck_hint` is present, map it to the closest available deck (e.g., "Machine learning" → "GK::Engineering::CS::ML").
-4) If no hint is present, infer the most specific deck from the content. Prefer the longest matching path among candidates (most specific).
-5) If no good match exists, generate a new deck as a subdirectory of GK. Choose an appropriate name.
+3) If `optional_deck_hint` is present, map it to the closest available deck (e.g., "Machine learning" → "GK::Engineering::CS::ML"). Prefer the longest matching path among candidates (most specific).
+4) If no hint is present, infer the most specific deck from the content.
+5) If no appropriate match among existing decks exist, generate a new deck as a subdirectory of GK. Choose an appropriate name.
 
 MODE: "parse"
 - Extract well-formed flashcards from `text`.

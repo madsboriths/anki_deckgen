@@ -6,7 +6,6 @@ class OpenAIAdapter:
     def execute_gpt_query(self, system_prompt: str, user_prompt: str) -> str:
         try:
             response = self.client.responses.create(
-                # model="gpt-5-nano",
                 model = self.model,
                 input=[
                     {"role": "system", "content": system_prompt},
