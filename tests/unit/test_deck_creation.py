@@ -1,5 +1,5 @@
 from typer.testing import CliRunner
-from anki_scraper.cli import app
+from anki_deckgen.core.service import app
 
 runner = CliRunner()
 

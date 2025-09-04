@@ -1,4 +1,4 @@
-from anki_scraper.anki_flashcards import create_or_update_flashcard_deck
+from anki_deckgen.core.flashcard_logic import create_or_update_flashcard_deck
 
 def test_add_cards_to_deck():
     flashcards ="""

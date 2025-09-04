@@ -1,18 +1,18 @@
 [tool.poetry]
-name = "anki-scraper"
+name = "anki-deckgen"
 version = "1.0.0"
 description = ""
 authors = []
 
 [tool.poetry.scripts]
-anki-scraper = "anki_scraper.cli:app"
+anki-deckgen = "anki_deckgen.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 
-[tool.anki-scraper]
+[tool.anki-deckgen]
 output_dir = "./generated_decks"
 
 [build-system]

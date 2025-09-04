@@ -1,7 +1,7 @@
 import genanki as gk
 import random
 
-STANDARD_MODEL = gk.Model(
+BASIC_FLASHCARD_MODEL = gk.Model(
   random.randrange(1 << 30, 1 << 31),
   'Standard Model',
   fields=[
@@ -40,3 +40,8 @@ class Flashcard:
             "question": self.front,
             "answer": self.back
         }
+    
+class Message:
+    client_text: str
+    def __init__(self, text: str):
+        self.text = text

@@ -1,6 +1,6 @@
-from anki_scraper.cli import app
-from anki_scraper.models import Card
-import anki_scraper.cli as cli
+from anki_deckgen.core.service import app
+from anki_deckgen.core.models import Card
+import anki_deckgen.core.service as service
 
 from typer.testing import CliRunner
 

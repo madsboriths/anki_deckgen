@@ -1,5 +1,5 @@
-from anki_scraper.cli import app
-import anki_scraper.fileio as io
+from anki_deckgen.core.service import app
+import anki_deckgen.core.fileio as io
 from typer.testing import CliRunner
 from pathlib import Path
 import toml
